@@ -10,12 +10,12 @@
     <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
     <link rel="stylesheet" href="index.css"/>
     <!-- TODO: remove jquery (only used for debugging) -->
-    <script src="index.js" defer="defer"></script>
+    <script type="module" src="index.js" defer="defer"></script>
 
     <title>Simple client</title>
   </head>
 
-  <body onload="renderPage();">
+  <body onload="window.renderPage();">
     <noscript><h1>You need to enable JavaScript to run this app!!!</h1></noscript>
     <form id="query_form">
       <label>Query:</label><br/>
