@@ -6,7 +6,6 @@ body {
     background-color: #fbfbfb;
     border: 1px solid black;
     border-collapse: collapse;
-    font-family: "Inconsolata";
     font-size: 10pt;
     line-height: 1.1;
     overflow: auto;
@@ -18,7 +17,6 @@ body {
 }
 
 .printed_output {
-    font-family: "Inconsolata";
     font-weight: bold;
     font-size: 9pt;
 }

@@ -1,1 +1,1 @@
-swipl server.pl --port=1002 --dir=static
+swipl server.pl --port=1008 --dir=.

@@ -2,7 +2,7 @@
 % -*- mode: Prolog -*-
 
 % Start this with:
-%   swipl simple_server.pl --port 1002 --dir static
+%   swipl simple_server.pl --port 1008 --dir client
 
 % TODO: if using daemon:
 %         swipl simple_server.pl --port=.... --pidfile=/var/run/simple_server.pid
@@ -13,9 +13,9 @@
 % See README.md for an overview of how the code works.
 
 % Access this from a browser with
-%   http://localhost:1002
+%   http://localhost:1008
 %     which does a redirect to:
-%   http://localhost:1002/static/simple_client.html
+%   http://localhost:1008/client/index.html
 
 % See also:
 %    http://www.pathwayslms.com/swipltuts/html/index.html
@@ -71,9 +71,9 @@
 %! http:location(+Alias, -Expansion, -Options) is nondet.
 % See https://www.swi-prolog.org/pldoc/doc_for?object=http%3Alocation/3
 % This is called by http_absolute_location(+Spec, -Path, +Options), e.g.:
-% http_absolute_location(static('simple_client.js'), Path, []), Path='/static/simple_client.js'.
+% http_absolute_location(client('index.js'), Path, []), Path='/client/index.js'.
 % http_absolute_location(json(.), Path, []), Path='/json/'.
-http:location(static, root(static), []).
+http:location(client, root(client), []).
 http:location(json, root(json), []).
 
 %! simple_server_main/0 is det.
@@ -85,7 +85,7 @@ http:location(json, root(json), []).
 % Note: If you run simple_server_impl/0, it exits immediately.
 % Instead of running prolog/0, you can do something like
 % thread_get_message(x), which will wait forever, or you can do
-% thread_join('http@1002', _Status) -- this convention is not
+% thread_join('http@1008', _Status) -- this convention is not
 % documented but can be found by using
 % thread_httpd:current_server(Port, _Goal, Thread, _Queue, _Scheme, _StartTime).
 % See also: https://www.swi-prolog.org/pldoc/man?section=httpunixdaemon
@@ -118,10 +118,10 @@ server_opts(Opts) :-
                             'SWI-Prolog version is too old')))
     ),
     OptsSpec =
-        [[opt(port), type(integer), default(1002), longflags([port]),
+        [[opt(port), type(integer), default(1008), longflags([port]),
           help('Server port')],
-         [opt(dir), type(atom), default('static'), longflags([dir]),
-          help('Directory for the static files (for "static" URL)')]],
+         [opt(dir), type(atom), default('client'), longflags([dir]),
+          help('Directory for the client files (for "client" URL)')]],
     opt_arguments(OptsSpec, Opts0, PositionalArgs),
     dict_create(Opts, opts, Opts0),
     (   PositionalArgs == []
@@ -132,32 +132,32 @@ server_opts(Opts) :-
     ).
 
 %! assert_server_locations(+Opts:dict) is det.
-% Assert user:file_search_path/2 facts for the static files that can
+% Assert user:file_search_path/2 facts for the client files that can
 % then be accessed (using absolute_file_name/3) by
-% static(FileName). This is asserted dynamically because the value is
+% client(FileName). This is asserted dynamically because the value is
 % taken from the command line.
 assert_server_locations(Opts) :-
-    debug(log, 'static dir: ~q', [Opts.dir]),
+    debug(log, 'client dir: ~q', [Opts.dir]),
     asserta(user:file_search_path(static_dir, Opts.dir)).
 
-% http://localhost:1002/ ... redirects to /static/simple_client.html
+% http://localhost:1008/ ... redirects to /client/index.html
 %      - for debugging, 'moved' can be cleared by chrome://settings/clearBrowserData
 %        (Cached images and files)
 % You might want to also specify root('index.html').
 :- http_handler(root(.),
                 http_handler_redirect(
                     moved, % or 'moved_temporary', for easier debugging
-                    static('simple_client.html')),
+                    client('index.html')),
                 []).
 
-% Serve localhost:1002/static/ from 'static' directory (See also facts for http:location/3)
+% Serve localhost:1008/client/ from 'client' directory (See also facts for http:location/3)
 % For debugging, you might want cache(false).
 % See also https://swi-prolog.discourse.group/t/how-to-debug-if-modified-since-with-http-reply-from-files/1892/3
-:- http_handler(static(.),
-                http_reply_from_files(static_dir(.), [cache(true)]),
+:- http_handler(client(.),
+                http_reply_from_files(static_dir(.), [cache(false)]),
                 [prefix]).
 
-:- http_handler(root(json),     % localhost:1002/json
+:- http_handler(root(json),     % localhost:1008/json
                 reply_with_json, [priority(0)]).
 
 %! http_handler_redirect(+How:atom, +To, +Request) is det.
