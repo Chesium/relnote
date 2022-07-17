@@ -1,42 +1,19 @@
-"use strict";
-
+import { query, sanitizeText } from "./swiplPort.js";
+import * as RN from "./relnote.js";
 // Simple client for running a query on the server and displaying the result
 
 // Called by <body onload="renderPage();">
-window.renderPage = async function () {
+async function renderPage() {
   document.getElementById("query_form").addEventListener("submit", handleSubmit);
   document.getElementById("result").style.display = "none";
-};
+}
 
 // Handler for form's "Send query" button
 async function handleSubmit(event) {
   event.preventDefault();
-
   let text = document.getElementById("query");
-  await fetchFromServer("/json", { query: text.value }, (query_result) => displayQueryResult(query_result));
-}
-
-// Send a request to the server and schedule a callback.
-async function fetchFromServer(path, request, callback) {
-  // callback should take a single arg, the response from the server.
-  try {
-    const response = await fetch(path, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(request),
-      mode: "cors", // Don't need?
-      cache: "no-cache", // Don't need?
-      credentials: "same-origin", // Don't need?
-      redirect: "follow", // Don't need?
-      referrerPolicy: "no-referrer", // Don't need?
-    });
-    callback(await response.json());
-  } catch (err) {
-    // TODO: the following doesn't capture enough information;
-    //       there is interesting information in the console log
-    //       such as error code 500 or ERR_CONNECTION_REFUSED
-    alert("***fetch " + JSON.stringify(request) + ": " + err);
-  }
+  let res = await query(text.value);
+  displayQueryResult(res);
 }
 
 // Callback from fetchFromServer for handleSubmit
@@ -80,19 +57,40 @@ function displayQueryResult(query_result) {
   }
 }
 
-// Sanitize a string, allowing tags to not cause problems
-function sanitizeText(raw_str) {
-  // There shouldn't be a need for .replace(/ /g, '&nbsp;') if CSS
-  // has white-space:pre ... but by experiment, it's needed.
-  // TODO: remove the '<br/>' insertion and put it into extract_color.pl.
-  return raw_str
-    ? raw_str
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&apos;")
-        .replace(/\n/g, "<br/>") // TODO: remove - not needed?
-        .replace(/\s/g, "&nbsp;") // TODO: add test for tabs in source
-    : raw_str;
+window.renderPage = renderPage;
+// window.addCharacter = RN.addCharacter;
+// window.getCharacterList = RN.getCharacterList;
+
+async function test() {
+  for (let i = 1; i <= 4; i++) {
+    await RN.addCharacter(`T${i}`);
+  }
+  // await addCharacter("23_HAHAH");
+  // await addCharacter("-——_简介");
+  await RN.getCharacterList();
+  // await RN.addRelById(1,0,"father");
+  // await RN.addRelById(2,0,"mother");
+  // await RN.addRelById(0,1,"son");
+  // await RN.addRelById(0,2,"son");
+  await RN.addR("T2","T1","father");
+  await RN.addR("T3","T1","mother");
+  await RN.addR("T1","T2","son");
+  await RN.addR("T1","T3","son");
+  await RN.allRel();
+  await RN.getallR("son");
+  await RN.findR("l","T1","father");
+  await RN.findR("r","T1","son");
+  await RN.findR("l","T2","son");
+  await RN.findR("r","T3","mother");
+  await RN.findR("l","T3","mother");
+  // setof(A:B:R,rel(A,B,R),L)
 }
+
+window.test = () => {
+  let start = performance.now();
+  let res = test();
+  res.then(() => {
+    let end = performance.now();
+    console.log(`use ${end - start} ms`);
+  });
+};

@@ -1,6 +1,3 @@
-#!/usr/bin/env swipl
-% -*- mode: Prolog -*-
-
 % Start this with:
 %   swipl simple_server.pl --port 1008 --dir client
 
@@ -63,6 +60,7 @@
 % using comnmand-line options. This is used by absolute_file_name/3
 % to locate the directory for serving the files.
 :- dynamic user:file_search_path/2.
+
 
 % See https://www.swi-prolog.org/howto/http/HTTPFile.html
 % and library(http/mimetype).
