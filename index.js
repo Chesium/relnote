@@ -1,11 +1,13 @@
 import { query, sanitizeText } from "./swiplPort.js";
 import * as RN from "./relnote.js";
+import log from "./log.js";
 // Simple client for running a query on the server and displaying the result
 
 // Called by <body onload="renderPage();">
 async function renderPage() {
   document.getElementById("query_form").addEventListener("submit", handleSubmit);
-  document.getElementById("result").style.display = "none";
+  document.getElementById("addChButton").addEventListener("submit", handleAddCh);
+  // document.getElementById("result").style.display = "none";
 }
 
 // Handler for form's "Send query" button
@@ -14,6 +16,13 @@ async function handleSubmit(event) {
   let text = document.getElementById("query");
   let res = await query(text.value);
   displayQueryResult(res);
+}
+
+async function handleAddCh(event) {
+  event.preventDefault();
+  // let text = document.getElementById("query");
+  // let res = await query(text.value);
+  // displayQueryResult(res);
 }
 
 // Callback from fetchFromServer for handleSubmit
@@ -62,7 +71,7 @@ window.renderPage = renderPage;
 // window.getCharacterList = RN.getCharacterList;
 
 async function test() {
-  for (let i = 1; i <= 4; i++) {
+  for (let i = 1; i <= 40; i++) {
     await RN.addCharacter(`T${i}`);
   }
   // await addCharacter("23_HAHAH");
@@ -72,19 +81,21 @@ async function test() {
   // await RN.addRelById(2,0,"mother");
   // await RN.addRelById(0,1,"son");
   // await RN.addRelById(0,2,"son");
-  await RN.addR("T2","T1","father");
-  await RN.addR("T3","T1","mother");
-  await RN.addR("T1","T2","son");
-  await RN.addR("T1","T3","son");
+  await RN.addR("T2", "T1", "father");
+  await RN.addR("T3", "T1", "mother");
+  await RN.addR("T1", "T2", "son");
+  await RN.addR("T1", "T3", "son");
   await RN.allRel();
   await RN.getallR("son");
-  await RN.findR("l","T1","father");
-  await RN.findR("r","T1","son");
-  await RN.findR("l","T2","son");
-  await RN.findR("r","T3","mother");
-  await RN.findR("l","T3","mother");
+  await RN.findR("l", "T1", "father");
+  await RN.findR("r", "T1", "son");
+  await RN.findR("l", "T2", "son");
+  await RN.findR("r", "T3", "mother");
+  await RN.findR("l", "T3", "mother");
   // setof(A:B:R,rel(A,B,R),L)
 }
+
+window.log = log;
 
 window.test = () => {
   let start = performance.now();

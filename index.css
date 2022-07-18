@@ -1,22 +1,104 @@
 body {
-    background-color: #fdf6e3;
+  background-color: #fdf6e3;
 }
 
 .vars_table {
-    background-color: #fbfbfb;
-    border: 1px solid black;
-    border-collapse: collapse;
-    font-size: 10pt;
-    line-height: 1.1;
-    overflow: auto;
+  background-color: #fbfbfb;
+  border: 1px solid black;
+  border-collapse: collapse;
+  font-size: 10pt;
+  line-height: 1.1;
+  overflow: auto;
 }
 
 .vars_cell {
-    border: 1px solid black;
-    padding: 5px;
+  border: 1px solid black;
+  padding: 5px;
 }
 
 .printed_output {
-    font-weight: bold;
-    font-size: 9pt;
+  font-weight: bold;
+  font-size: 9pt;
+}
+
+.qform {
+  width: 25em;
+}
+
+#addChButton,
+#addRButton {
+  width: 100%;
+}
+
+.q_name {
+  width: 22em;
+}
+
+.q_id {
+  width: 3em;
+}
+
+#logSection {
+  width: 30em;
+  height: 12em;
+}
+
+#log {
+  background-color: #fff1cc;
+  width: 100%;
+  height: 100%;
+  overflow-x: hidden;
+  overflow-y: scroll;
+}
+
+#log > p {
+  margin: 0%;
+}
+
+.log_rn {
+  color: red;
+}
+
+.log_swipl {
+  color: grey;
+}
+
+#chListSection {
+  width: 30em;
+  height: 12em;
+}
+
+#chList {
+  background-color: #ffe7cc;
+  width: 100%;
+  height: 100%;
+  overflow-x: hidden;
+  overflow-y: scroll;
+}
+
+#chlTable {
+  background-color: #fbfbfb;
+  border: 1px solid black;
+  border-collapse: collapse;
+  font-size: 10pt;
+  line-height: 1.1;
+  overflow: auto;
+}
+
+#chl_id {
+  width: 3em;
+}
+
+#chl_name {
+  width: 20em;
+}
+
+#chlTable th {
+  background-color: #fbfbfb;
+  border: 1px solid black;
+  padding: 5px;
+}
+#chlTable td {
+  background-color: #fbfbfb;
+  border: 1px solid black;
 }

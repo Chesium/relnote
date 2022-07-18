@@ -2,36 +2,167 @@
 <html>
   <head lang="en">
     <!-- disable cache for debugging -->
-    <meta http-equiv="cache-control" content="no-cache"/>
-    <meta http-equiv="expires" content="0"/>
-    <meta http-equiv="pragma" content="no-cache"/>
+    <meta http-equiv="cache-control" content="no-cache" />
+    <meta http-equiv="expires" content="0" />
+    <meta http-equiv="pragma" content="no-cache" />
     <!-- end: disable cache for debugging -->
-    <meta charset="utf-8"/>
-    <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-    <link rel="stylesheet" href="index.css"/>
-    <!-- TODO: remove jquery (only used for debugging) -->
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="index.css" />
     <script type="module" src="index.js" defer="defer"></script>
 
     <title>Simple client</title>
   </head>
 
   <body onload="window.renderPage();">
-    <noscript><h1>You need to enable JavaScript to run this app!!!</h1></noscript>
     <form id="query_form">
-      <label>Query:</label><br/>
-      <input type="text" id="query" size="100"/><br/>
-      <input type="submit" value="Send query"/>
+      <label>询问</label><br />
+      <input type="text" id="query" size="100" /><br />
+      <input type="submit" value="发送" />
     </form>
     <div id="result">
-      <p>
-        <table>
-          <tr valign="top"><td><b>Query:</b></td>   <td id="result:query">&nbsp;</td></tr>
-          <tr valign="top"><td><b>(after)</b></td>  <td id="result:query_after_call">&nbsp;</td></tr>
-          <tr valign="top"><td><b>Success:</b></td> <td id="result:success">&nbsp;</td></tr>
-          <tr valign="top"><td><b>Error:</b></td>   <td id="result:error">&nbsp;</td></tr>
-          <tr valign="top"><td><b>Vars:</b></td>    <td id="result:vars">&nbsp;</td></tr>
-          <tr valign="top"><td><b>Printed:</b></td> <td id="result:printed_output">&nbsp;</td></tr>
-        </table>
+      <p></p>
+      <table>
+        <tr valign="top">
+          <td><b>原始询问</b></td>
+          <td id="result:query">&nbsp;</td>
+        </tr>
+        <tr valign="top">
+          <td><b>调用后的询问</b></td>
+          <td id="result:query_after_call">&nbsp;</td>
+        </tr>
+        <tr valign="top">
+          <td><b>成功吗</b></td>
+          <td id="result:success">&nbsp;</td>
+        </tr>
+        <tr valign="top">
+          <td><b>错误</b></td>
+          <td id="result:error">&nbsp;</td>
+        </tr>
+        <tr valign="top">
+          <td><b>变量</b></td>
+          <td id="result:vars">&nbsp;</td>
+        </tr>
+        <tr valign="top">
+          <td><b>打印</b></td>
+          <td id="result:printed_output">&nbsp;</td>
+        </tr>
+      </table>
     </div>
+    <form id="addCharacter" class="qform">
+      <center><input id="addChButton" type="submit" value="添加人物" /></center>
+      <center>
+        <table>
+          <tr>
+            <td>人名</td>
+            <td><input type="text" class="q_name" /></td>
+          </tr>
+          <tr>
+            <td>简标</td>
+            <td><input type="text" class="q_id" /></td>
+          </tr>
+        </table>
+      </center>
+    </form>
+    <br />
+    <form id="addRel" class="qform">
+      <center><input id="addRButton" type="submit" value="添加关系" /><br /></center>
+
+      <center>
+        <label>A&nbsp;</label><input type="text" class="q_id" /> <label>B&nbsp;</label
+        ><input type="text" class="q_id" />
+      </center>
+      <br />
+
+      <center>
+        <label>A是B&nbsp;</label>
+        <select>
+          <option value="father">父亲</option>
+          <option value="mother">母亲</option>
+          <option value="son">儿子</option>
+          <option value="daugther">女儿</option>
+        </select>
+      </center>
+    </form>
+    <br />
+    <form id="qRel" class="qform">
+      <center><b>关系查询</b></center>
+      <br />
+
+      <center>
+        <table>
+          <tr>
+            <td><center>谁</center></td>
+            <td>是</td>
+            <td><input type="text" class="q_id" /></td>
+            <td>的</td>
+            <td>
+              <select>
+                <option value="father">父亲</option>
+                <option value="mother">母亲</option>
+                <option value="son">儿子</option>
+                <option value="daugther">女儿</option>
+              </select>
+            </td>
+            <td><input type="submit" value="查询" /></td>
+          </tr>
+          <tr>
+            <td><input type="text" class="q_id" /></td>
+            <td>是</td>
+            <td><center>谁</center></td>
+            <td>的</td>
+            <td>
+              <select>
+                <option value="father">父亲</option>
+                <option value="mother">母亲</option>
+                <option value="son">儿子</option>
+                <option value="daugther">女儿</option>
+              </select>
+            </td>
+            <td><input type="submit" value="查询" /></td>
+          </tr>
+          <tr>
+            <td><center>谁</center></td>
+            <td>是</td>
+            <td><center>谁</center></td>
+            <td>的</td>
+            <td>
+              <select>
+                <option value="father">父亲</option>
+                <option value="mother">母亲</option>
+                <option value="son">儿子</option>
+                <option value="daugther">女儿</option>
+              </select>
+            </td>
+            <td><input type="submit" value="查询" /></td>
+          </tr>
+          <tr>
+            <td><input type="text" class="q_id" /></td>
+            <td>是</td>
+            <td><input type="text" class="q_id" /></td>
+            <td>的</td>
+            <td><center>什么人</center></td>
+            <td><input type="submit" value="查询" /></td>
+          </tr>
+        </table>
+      </center>
+    </form>
+    <br />
+    <div id="logSection">
+      <center><b id="logHeader">日志</b></center>
+      <div id="log"></div>
+    </div>
+    <br /><br />
+    <div id="chListSection">
+      <center><b id="chListHeader">人物列表</b></center>
+      <div id="chList">
+        <table id="chlTable">
+          <tr>
+            <th id="chl_id">简标</th>
+            <th id="chl_name">人名</th>
+          </tr>
+        </table>
+      </div>
+    </div>
+    <br /><br />
   </body>
 </html>

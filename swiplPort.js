@@ -1,6 +1,8 @@
+import log from './log.js'
 // Send a request to the server and schedule a callback.
 export async function query(string) {
   // callback should take a single arg, the response from the server.
+  log(`Query "${string}"`,"swipl");
   try {
     const response = await fetch("/json", {
       method: "POST",
