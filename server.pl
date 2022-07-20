@@ -22,6 +22,7 @@
 % TODO: add a simple example of generating source with headers.
 %       and use reply_html_page/3
 %       See also: https://swi-prolog.discourse.group/t/additional-http-headers-with-reply-html-page-2-3/3624/3
+:- encoding(utf8).
 
 :- module(simple_server, [simple_server_main/0, simple_server_impl/0]).
 
@@ -93,10 +94,10 @@ simple_server_main :-
     prolog.  % REPL - terminated with exit.
 
 %! simple_server_impl/0 is det.
-% Process the options, start the http server.
+% 处理选项，启动服务器
 simple_server_impl :-
     server_opts(Opts),
-    % set_prolog_flag(verbose_file_search, true), % for debugging
+    % set_prolog_flag(verbose_file_search, true), % 用于调试
     assert_server_locations(Opts),
     http_server([port(Opts.port)
                  % TODO: enable ssl (https):
@@ -105,29 +106,13 @@ simple_server_impl :-
                 ]).
 
 %! server_opts(-Opts:dict) is det.
-% Process the command-line options into a dict.
+% 获取命令行参数
 server_opts(Opts) :-
-    MinPrologVersion = 80307,
-    current_prolog_flag(version, PrologVersion),
-    (   PrologVersion >= MinPrologVersion
-    ->  true
-    ;   throw(error(prolog_version >= MinPrologVersion,
-                    context(current_prolog_flag(version,PrologVersion),
-                            'SWI-Prolog version is too old')))
-    ),
     OptsSpec =
-        [[opt(port), type(integer), default(1008), longflags([port]),
-          help('Server port')],
-         [opt(dir), type(atom), default('client'), longflags([dir]),
-          help('Directory for the client files (for "client" URL)')]],
-    opt_arguments(OptsSpec, Opts0, PositionalArgs),
-    dict_create(Opts, opts, Opts0),
-    (   PositionalArgs == []
-    ->  true
-    ;   throw(error(extra_args,
-                    context(PositionalArgs),
-                    'Unknown positional arg(s)'))
-    ).
+        [[opt(port), type(integer), longflags([port])],
+         [opt(dir), type(atom), default('.'), longflags([dir])]],
+    opt_arguments(OptsSpec, Opts0, _),
+    dict_create(Opts, opts, Opts0).
 
 %! assert_server_locations(+Opts:dict) is det.
 % Assert user:file_search_path/2 facts for the client files that can
@@ -135,7 +120,7 @@ server_opts(Opts) :-
 % client(FileName). This is asserted dynamically because the value is
 % taken from the command line.
 assert_server_locations(Opts) :-
-    debug(log, 'client dir: ~q', [Opts.dir]),
+    % debug(log, 'client dir: ~q', [Opts.dir]), % 用于调试
     asserta(user:file_search_path(static_dir, Opts.dir)).
 
 % http://localhost:1008/ ... redirects to /client/index.html

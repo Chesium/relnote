@@ -8,9 +8,9 @@ export async function addCharacter(name) {
   window.chL.push({ name: name, id: ID });
   log(`Add Character: [c${ID}] "${name}"`, "rn");
   await insert(`character("${name}",c${ID})`);
-  
-  let chlT=document.getElementById("chlTable");
-  chlT.innerHTML+=`<tr><td><center>c${ID}</center></td><td>${name}</td></tr>`;
+
+  let chlT = document.getElementById("chlTable");
+  chlT.innerHTML += `<tr><td><center>c${ID}</center></td><td>${name}</td></tr>`;
 }
 
 function getChIdByName(name) {
@@ -29,6 +29,8 @@ export async function addR(Na, Nb, Rel) {
 }
 
 export async function addRelById(A, B, Rel) {
+  let krlT = document.getElementById("krlTable");
+  krlT.innerHTML += `<tr><td>[c${A}]${window.chL[A].name}</td><td>[c${B}]${window.chL[B].name}</td><td><center>${Rel}</center></td></tr>`;
   await insert(`rel(c${A},c${B},${Rel})`);
 }
 

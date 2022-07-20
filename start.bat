@@ -1,1 +1,0 @@
-swipl server.pl --port=1008 --dir=.
