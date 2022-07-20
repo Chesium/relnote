@@ -3,26 +3,21 @@ body {
   background-color: #ffffff;
 }
 
-#root {
-  width: 100%;
-  height: 100%;
-}
-
-.sideroot {
+.sidetd {
   width: 50%;
   padding: 1em;
 }
 
-#l_root {
-  background-color: #F7FBFC;
+#Lroot {
+  background-color: #f7fbfc;
 }
 
-#r_root {
-  background-color: #D6E6F2;
+#Rroot {
+  background-color: #d6e6f2;
 }
 
 .vars_table {
-  background-color: #769FCD;
+  background-color: #769fcd;
   border: 1px solid black;
   border-collapse: collapse;
   font-size: 10pt;
@@ -49,21 +44,8 @@ body {
   width: 100%;
 }
 
-.q_name {
-  width: 22em;
-}
-
-.q_id {
-  width: 3em;
-}
-
-#logSection {
-  width: 30em;
-  height: 12em;
-}
-
 #log {
-  background-color: #D6E6F2;
+  background-color: #d6e6f2;
   width: 100%;
   height: 100%;
   overflow-x: hidden;
@@ -82,26 +64,44 @@ body {
   color: grey;
 }
 
-#chListSection {
-  width: 30em;
-  height: 12em;
-}
-
-#chList {
-  background-color: #D6E6F2;
+.oListContainer {
+  background-color: #d6e6f2;
   width: 100%;
   height: 100%;
   overflow-x: hidden;
   overflow-y: auto;
 }
 
-#chlTable {
-  background-color: #D6E6F2;
+.outputTables {
+  background-color: #d6e6f2;
   border: 1px solid black;
   border-collapse: collapse;
   font-size: 10pt;
   line-height: 1.1;
   overflow: auto;
+}
+
+.outputTables th {
+  background-color: #b9d7ea;
+  border: 1px solid black;
+  padding: 5px;
+}
+.outputTables td {
+  background-color: #b9d7ea;
+  border: 1px solid black;
+}
+
+.q_name {
+  width: 22em;
+}
+
+.q_id {
+  width: 3em;
+}
+
+.outputSections {
+  width: 30em;
+  height: 12em;
 }
 
 #chl_id {
@@ -112,53 +112,11 @@ body {
   width: 20em;
 }
 
-#chlTable th {
-  background-color: #B9D7EA;
-  border: 1px solid black;
-  padding: 5px;
-}
-#chlTable td {
-  background-color: #B9D7EA;
-  border: 1px solid black;
-}
-
-
-#krlSection {
-  width: 30em;
-  height: 12em;
-}
-
-#krl {
-  background-color: #D6E6F2;
-  width: 100%;
-  height: 100%;
-  overflow-x: hidden;
-  overflow-y: auto;
-}
-
-#krlTable {
-  background-color: #D6E6F2;
-  border: 1px solid black;
-  border-collapse: collapse;
-  font-size: 10pt;
-  line-height: 1.1;
-  overflow: auto;
-}
-
-#krl_a,#krl_b {
+#krl_a,
+#krl_b {
   width: 15em;
 }
 
 #krl_R {
   width: 5em;
-}
-
-#krlTable th {
-  background-color: #B9D7EA;
-  border: 1px solid black;
-  padding: 5px;
-}
-#krlTable td {
-  background-color: #B9D7EA;
-  border: 1px solid black;
 }

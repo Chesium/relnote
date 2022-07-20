@@ -1,4 +1,17 @@
 {
+  "name": "relnote",
+  "version": "1.0.0",
+  "main": "index.html",
+  "dependencies": {},
+  "scripts": {
+    "b": "npx snowpack build",
+    "s": "swipl server.pl --port=1009 --dir=dist",
+    "bs": "npx snowpack build && swipl server.pl --port=1009 --dir=dist"
+  },
+  "keywords": [],
+  "author": "chesium",
+  "license": "ISC",
+  "description": "",
   "devDependencies": {
     "snowpack": "^3.8.8",
     "acorn-walk": "^8.2.0",
@@ -342,17 +355,5 @@
     "yallist": "^4.0.0",
     "yaml": "^1.10.2",
     "yocto-queue": "^0.1.0"
-  },
-  "name": "relnote",
-  "version": "1.0.0",
-  "main": "snowpack.config.js",
-  "dependencies": {},
-  "scripts": {
-    "dev": "npx snowpack dev",
-    "build": "npx snowpack build && swipl server.pl --port=1008 --dir=dist"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "description": ""
+  }
 }

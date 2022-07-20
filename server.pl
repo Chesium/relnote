@@ -1,5 +1,5 @@
 % Start this with:
-%   swipl simple_server.pl --port 1008 --dir client
+%   swipl simple_server.pl --port 1009 --dir client
 
 % TODO: if using daemon:
 %         swipl simple_server.pl --port=.... --pidfile=/var/run/simple_server.pid
@@ -10,9 +10,9 @@
 % See README.md for an overview of how the code works.
 
 % Access this from a browser with
-%   http://localhost:1008
+%   http://localhost:1009
 %     which does a redirect to:
-%   http://localhost:1008/client/index.html
+%   http://localhost:1009/client/index.html
 
 % See also:
 %    http://www.pathwayslms.com/swipltuts/html/index.html
@@ -84,7 +84,7 @@ http:location(json, root(json), []).
 % Note: If you run simple_server_impl/0, it exits immediately.
 % Instead of running prolog/0, you can do something like
 % thread_get_message(x), which will wait forever, or you can do
-% thread_join('http@1008', _Status) -- this convention is not
+% thread_join('http@1009', _Status) -- this convention is not
 % documented but can be found by using
 % thread_httpd:current_server(Port, _Goal, Thread, _Queue, _Scheme, _StartTime).
 % See also: https://www.swi-prolog.org/pldoc/man?section=httpunixdaemon
@@ -123,7 +123,7 @@ assert_server_locations(Opts) :-
     % debug(log, 'client dir: ~q', [Opts.dir]), % 用于调试
     asserta(user:file_search_path(static_dir, Opts.dir)).
 
-% http://localhost:1008/ ... redirects to /client/index.html
+% http://localhost:1009/ ... redirects to /client/index.html
 %      - for debugging, 'moved' can be cleared by chrome://settings/clearBrowserData
 %        (Cached images and files)
 % You might want to also specify root('index.html').
@@ -133,14 +133,14 @@ assert_server_locations(Opts) :-
                     client('index.html')),
                 []).
 
-% Serve localhost:1008/client/ from 'client' directory (See also facts for http:location/3)
+% Serve localhost:1009/client/ from 'client' directory (See also facts for http:location/3)
 % For debugging, you might want cache(false).
 % See also https://swi-prolog.discourse.group/t/how-to-debug-if-modified-since-with-http-reply-from-files/1892/3
 :- http_handler(client(.),
                 http_reply_from_files(static_dir(.), [cache(false)]),
                 [prefix]).
 
-:- http_handler(root(json),     % localhost:1008/json
+:- http_handler(root(json),     % localhost:1009/json
                 reply_with_json, [priority(0)]).
 
 %! http_handler_redirect(+How:atom, +To, +Request) is det.
