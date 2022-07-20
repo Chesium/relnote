@@ -1,6 +1,6 @@
 // import { query, sanitizeText } from "./swiplPort.js";
-import relnote from "./relnote.js";
-import log from "./log.js";
+import relnote from "./relnote";
+import log from "./log";
 // Simple client for running a query on the server and displaying the result
 
 // Called by <body onload="renderPage();">
@@ -20,7 +20,7 @@ import log from "./log.js";
 // window.getCharacterList = app.getCharacterList;
 
 const app=new relnote("/json");
-window.app=app; //调试
+(<any>window).app=app; //调试
 
 async function test() {
   for (let i = 1; i <= 40; i++) {
@@ -47,9 +47,9 @@ async function test() {
   // setof(A:B:R,rel(A,B,R),L)
 }
 
-window.log = log;
+(<any>window).log = log;
 
-window.test = () => {
+(<any>window).test = () => {
   let start = performance.now();
   let res = test();
   res.then(() => {

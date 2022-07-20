@@ -3,9 +3,9 @@
 
 /** @type {import("snowpack").SnowpackUserConfig } */
 module.exports = {
-  exclude: ["**/server.pl", "**/node_modules/**/*"],
+  exclude: ["**/server.pl", "**/node_modules/**/*", "**/.git/**/*"],
   mount: {},
-  plugins: [],
+  plugins: ['@snowpack/plugin-typescript'],
   packageOptions: {},
   devOptions: {},
   buildOptions: {
