@@ -76,17 +76,17 @@ export default class relnote {
     return await this.db.check(qrel.prologFact());
   }
 
-  // async findR_lr(LR: "l" | "r", Nx: string, Rel: string) {
-  //   // let X = this.getChIdByName(Nx);
-  //   if (this.loadedRelTs[Rel].arity != 2) throw new Error("RelationType's arity isn't 2.");
+  async findR_lr(LR: "l" | "r", Nx: string, Rel: string) {
+    let ch = this.chs[this.getChIdByName(Nx)];
+    if (this.loadedRelTs[Rel].arity != 2) throw new Error("RelationType's arity isn't 2.");
 
-  //   let qstr = LR == "l" ? `setof(I,rel(I,c${X},${Rel}),L)` : `setof(I,rel(c${X},I,${Rel}),L)`;
-  //   if (LR == "l") log(`Search : Who——[c${Nx}]:${Rel}"`, "rn");
-  //   else log(`Search : [c${Nx}]——Who:${Rel}"`, "rn");
-  //   let res = await this.db.query(qstr);
-  //   if (res.success) console.log(res.vars[1].value);
-  //   else console.log([]);
-  // }
+    let qtmp =
+      LR == "l" ? `rel([#,${ch.pid()}],${Rel})` : `rel([${ch.pid()},#],${Rel})`;
+    // if (LR == "l") log(`Search : Who——[c${Nx}]:${Rel}"`, "rn");
+    // else log(`Search : [c${Nx}]——Who:${Rel}"`, "rn");
+    let res = await this.db.getall(qtmp);
+    console.log(res);
+  }
 
   // async getallR(Rel: string) {
   //   log(`Search : Who——Who:${Rel}"`, "rn");

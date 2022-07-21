@@ -57,4 +57,14 @@ export default class database {
   async insert(term: string, order: "a" | "z" = "z") {
     await this.query(`assert${order}(${term})`);
   }
+
+  async getall(term: string) {
+    const tmp_ident = "Un",
+      sub_ident = /#/g,
+      list_ident = "UnL";
+    let qstr = `setof(${tmp_ident},${term.replace(sub_ident, tmp_ident)},${list_ident})`;
+    let res = await this.query(qstr);
+    if (res.success) return res.vars.slice(-1)[0].value;
+    else return "[]";
+  }
 }

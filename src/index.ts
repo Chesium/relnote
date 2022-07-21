@@ -23,11 +23,11 @@ async function test() {
   await app.addR(["T1", "T3"], "son_parent");
   // await app.allRel();
   // await app.getallR("son");
-  // await app.findR_lr("l", "T1", "father");
-  // await app.findR_lr("r", "T1", "son");
-  // await app.findR_lr("l", "T2", "son");
-  // await app.findR_lr("r", "T3", "mother");
-  // await app.findR_lr("l", "T3", "mother");
+  await app.findR_lr("l", "T1", "father_child");
+  await app.findR_lr("r", "T1", "son_parent");
+  await app.findR_lr("l", "T2", "son_parent");
+  await app.findR_lr("r", "T3", "mother_child");
+  await app.findR_lr("l", "T3", "mother_child");
   // setof(A:B:R,rel(A,B,R),L)
 }
 
