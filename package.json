@@ -13,6 +13,7 @@
   "description": "",
   "devDependencies": {
     "@snowpack/plugin-typescript": "^1.2.1",
+    "@types/sprintf-js": "^1.1.2",
     "abbrev": "^1.1.1",
     "acorn": "^8.7.1",
     "acorn-walk": "^8.2.0",
@@ -356,5 +357,8 @@
     "yaml": "^1.10.2",
     "yargs-parser": "^20.2.9",
     "yocto-queue": "^0.1.0"
+  },
+  "dependencies": {
+    "sprintf-js": "^1.1.2"
   }
 }

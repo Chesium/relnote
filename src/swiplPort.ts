@@ -1,4 +1,5 @@
-import log from "./log";
+import { frontend } from "./relnote";
+import * as FEv from "./frontendEvents";
 
 export interface swiplResp {
   query: string;
@@ -20,14 +21,16 @@ export class swiplResponse implements swiplResp {
 }
 
 export default class database {
+  f: frontend;
   path: string;
 
-  constructor(path: string) {
+  constructor(path: string, frontend: frontend) {
     this.path = path;
+    this.f = frontend;
   }
 
   async query(str: string): Promise<swiplResponse> {
-    log(`Query "${str}"`, "swipl");
+    this.f.handleEvent(new FEv.plQ(str));
     try {
       const response = await fetch(this.path, {
         method: "POST",
@@ -51,7 +54,7 @@ export default class database {
     return res.success; // Boolean
   }
 
-  async insert(term: string) {
-    await this.query(`assertz(${term})`);
+  async insert(term: string, order: "a" | "z" = "z") {
+    await this.query(`assert${order}(${term})`);
   }
 }
