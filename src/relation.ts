@@ -13,7 +13,7 @@ export class relation {
   ch: character[];
   static prologFact(type: relationType, ch: character[]): string {
     var str = `rel([`;
-    ch.map((ch, _) => {
+    ch.map((ch) => {
       str += ch.pid() + ",";
     });
     return str.slice(0, -1) + `],${type.pid})`;
@@ -25,7 +25,9 @@ export class relation {
     this.ch = ch;
   }
   description(): string {
-    return this.type.fmt.replace(/#\d/g, (w) => this.ch[Number(w[1])-1].name).replace(/#i/g, this.type.pid);
+    return this.type.fmt
+      .replace(/#\d/g, (w) => this.ch[Number(w.slice(1)) - 1].name)
+      .replace(/#i/g, this.type.pid);
   }
   prologFact(): string {
     return relation.prologFact(this.type, this.ch);

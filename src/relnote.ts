@@ -53,7 +53,7 @@ export default class relnote {
 
   async addR(Ns: string[], Rel: string) {
     await this.addRel(
-      Ns.map((n, _) => this.getChIdByName(n)),
+      Ns.map((n) => this.getChIdByName(n)),
       this.loadedRelTs[Rel]
     );
   }
@@ -61,7 +61,7 @@ export default class relnote {
   async addRel(IDS: number[], type: relationType) {
     const rel = new relation(
       type,
-      IDS.map((i, _) => this.chs[i])
+      IDS.map((i) => this.chs[i])
     );
     this.rels.push(rel);
     this.f.handleEvent(new FEv.addR(rel));
@@ -71,29 +71,28 @@ export default class relnote {
   async checkR(Ns: string[], Rel: string) {
     const qrel = new relation(
       this.loadedRelTs[Rel],
-      Ns.map((n, _) => this.chs[this.getChIdByName(n)])
+      Ns.map((n) => this.chs[this.getChIdByName(n)])
     );
     return await this.db.check(qrel.prologFact());
   }
 
   async findR_lr(LR: "l" | "r", Nx: string, Rel: string) {
-    let ch = this.chs[this.getChIdByName(Nx)];
     if (this.loadedRelTs[Rel].arity != 2) throw new Error("RelationType's arity isn't 2.");
 
-    let qtmp =
-      LR == "l" ? `rel([#,${ch.pid()}],${Rel})` : `rel([${ch.pid()},#],${Rel})`;
+    let ch = this.chs[this.getChIdByName(Nx)];
+    let qtmp = LR == "l" ? `rel([#1,${ch.pid()}],${Rel})` : `rel([${ch.pid()},#1],${Rel})`;
     // if (LR == "l") log(`Search : Who——[c${Nx}]:${Rel}"`, "rn");
     // else log(`Search : [c${Nx}]——Who:${Rel}"`, "rn");
     let res = await this.db.getall(qtmp);
     console.log(res);
   }
 
-  // async getallR(Rel: string) {
-  //   log(`Search : Who——Who:${Rel}"`, "rn");
-  //   let res = await this.db.query(`setof(Ai:Bi,rel(Ai,Bi,${Rel}),L)`);
-  //   if (res.success) console.log(res.vars[2].value);
-  //   else console.log([]);
-  // }
+  async getallR(Rel: string) {
+    if (this.loadedRelTs[Rel].arity != 2) throw new Error("RelationType's arity isn't 2.");
+    // log(`Search : Who——Who:${Rel}"`, "rn");
+    let res = await this.db.getall(`rel([#1,#2],${Rel})`);
+    console.log(res);
+  }
 
   // async allRel() {
   //   log(`Search : All Relationships"`, "rn");
@@ -113,7 +112,7 @@ export default class relnote {
   }
 
   async loadRelationTypes(relTs: relationType[]) {
-    relTs.map(async (relT, _) => {
+    relTs.map(async (relT) => {
       await this.loadRelationType(relT);
     });
   }

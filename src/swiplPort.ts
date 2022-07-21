@@ -58,13 +58,25 @@ export default class database {
     await this.query(`assert${order}(${term})`);
   }
 
-  async getall(term: string) {
+  async getall(term: string): Promise<string[][]> {
     const tmp_ident = "Un",
-      sub_ident = /#/g,
+      sub_ident = /#\d+/g,
       list_ident = "UnL";
-    let qstr = `setof(${tmp_ident},${term.replace(sub_ident, tmp_ident)},${list_ident})`;
+    // "Un1:Un2:Un3: ... :Un<unknownN>" 其中 Un 为 tmp_ident
+    let N = 1;
+    let qtmp = term.replace(sub_ident, (w) => {
+      if (Number(w.slice(1)) > N) N = Number(w.slice(1));
+      return tmp_ident + w.slice(1);
+    });
+    let tmp_list = [...Array(N).keys()].map((v) => tmp_ident + (v + 1)).join(":");
+    let qstr = `setof(${tmp_list},${qtmp},${list_ident})`;
     let res = await this.query(qstr);
-    if (res.success) return res.vars.slice(-1)[0].value;
-    else return "[]";
+    if (!res.success) return [];
+    let final = res.vars
+      .slice(-1)[0]
+      .value.slice(1, -1)
+      .split(",")
+      .map((l) => l.split(":"));
+    return final;
   }
 }

@@ -2,8 +2,8 @@ import relnote from "./relnote";
 import builtinFrontend from "./builtinFrontend";
 // import log from "./log";
 
-const app=new relnote("/json",new builtinFrontend());
-(<any>window).app=app; //调试
+const app = new relnote("/json", new builtinFrontend());
+(<any>window).app = app; //调试
 // (<any>window).sprintf=sprintf; //调试
 
 async function test() {
@@ -22,13 +22,14 @@ async function test() {
   await app.addR(["T1", "T2"], "son_parent");
   await app.addR(["T1", "T3"], "son_parent");
   // await app.allRel();
-  // await app.getallR("son");
   await app.findR_lr("l", "T1", "father_child");
   await app.findR_lr("r", "T1", "son_parent");
   await app.findR_lr("l", "T2", "son_parent");
   await app.findR_lr("r", "T3", "mother_child");
   await app.findR_lr("l", "T3", "mother_child");
   // setof(A:B:R,rel(A,B,R),L)
+
+  await app.getallR("son_parent");
 }
 
 (<any>window).log = app.f.log;

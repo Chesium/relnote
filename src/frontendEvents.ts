@@ -9,33 +9,33 @@ export default abstract class frontendEvent {
 }
 
 export class addCh extends frontendEvent {
-  ch:character;
-  constructor(Character:character){
+  ch: character;
+  constructor(Character: character) {
     super();
-    this.ch=Character;
+    this.ch = Character;
   }
 }
 
 export class addR extends frontendEvent {
-  rel:relation;
-  constructor(rel:relation){
+  rel: relation;
+  constructor(rel: relation) {
     super();
-    this.rel=rel;
+    this.rel = rel;
   }
 }
 
 export class checkR extends frontendEvent {
-  rel:relation;
-  constructor(rel:relation){
+  rel: relation;
+  constructor(rel: relation) {
     super();
-    this.rel=rel;
+    this.rel = rel;
   }
 }
 
 export class plQ extends frontendEvent {
-  q:string;
-  constructor(query:string){
+  q: string;
+  constructor(query: string) {
     super();
-    this.q=query;
+    this.q = query;
   }
 }
